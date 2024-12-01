@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+    @page{
+        size:  10.5in 13in;
+    }
+
+    @media (max width: 6in){
+        @page{
+            size: A5;
+        }
+    }
+
+    @page{
+        @bottom-right{
+            content: "Page "counter(page)" of "counter(pages);
+        }
+    }
+</style>
+<style>
+html{
+    zoom: 0.68;
+}
+
+body{
+    background: rgb(255, 255, 255);
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+    font-weight: 600;
+}
+
+page{
+    background: white;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 0.5cm;
+    box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+}
+page[size="A4"]{
+    width: 21cm;
+    height: auto;
+    padding: 5px;
+}
+.v-center{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.header{
+    background-color: #5271ff !important;
+    width: 100%;
+    height: 70px;
+    color: white !important;
+}
+.heading{
+    text-align:center !important;
+    vertical-align: baseline !important;
+}
+.pull-left{
+    float:left !important;
+    width: 100%;
+}
+.row{
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.pull-right{
+    float: right !important;
+}
+.containerdivNewLine { 
+    clear: both; 
+    float: left; 
+    display: block; 
+    position: relative; 
+} 
+.sl-no {
+    width: 3%;
+    position: absolute;
+    top: 0px !important;
+    left: 0px;
+}
+.question {
+    width: 82%;
+    position: absolute;
+    left: 3%;
+    top: 0%;
+}
+p{
+    margin: 0;
+}
+</style>
+</head>
+<body class="container-fluid">
+    <div class="header">
+        <div style="padding:1px;margin: 20px 0px;">
+            <h2 class="heading">SKOOLTEST</h2>
+        </div>
+    </div>
+    <h3 class="heading">Inserting a dummy line here</h3>
+    <h2 class="heading" th:text="${title}"></h2>
+    <div class="pull-left">
+        Code : <span th:text="${assessmentCode}"></span>
+    </div> 
+    <div class="containerdivNewLine"></div>
+    <br/>
+    <div class="pull-left">
+        Total Marks : <span th:text="${totalMarks}"></span>
+    </div>
+    <div class="containerdivNewLine"></div>
+    <div class="pull-right">
+        Due Date : <span th:text="${dueDate}"></span>
+    </div>
+    <div class="containerdivNewLine"></div>
+    <h4 class="pull-left">Instructions : </h4>
+    <div class="containerdivNewLine"></div>
+    <div class="pull-left">
+        <th:block>
+            <table>
+                <tbody>
+                    <tr th:each="instruction,iterator : ${instructions}">
+                        <td th:text="${iterator.index+1 + '. '}"></td>
+                        <td th:text="${instruction}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </th:block>
+    </div>
+    <div class="containerdivNewLine"></div>
+    <h4 class="pull-left">Questions : </h4>
+    <div class="containerdivNewLine"></div>
+    <div class="pull-left">
+        <th:block>
+            <table class="pull-left">
+                <tbody>
+                    <tr style="position:relative;" th:each="question,iterator : ${questions}">
+                        <td><span class="sl-no" th:text="${iterator.index+1+'. '}"></span></td>
+                        <td><span class="question" th:utext="${question.content}"></span></td>
+                        <td style="width:15%;" th:text="${'('+question.maxMarks+' mark(s))'}"></td>
+                    </tr>   
+                </tbody>
+            </table>
+        </th:block>            
+    </div>
+</body>
+</html>
